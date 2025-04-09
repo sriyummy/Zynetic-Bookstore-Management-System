@@ -1,6 +1,6 @@
 Zynetic Bookstore
 
-A full-stack bookstore management platform built using NestJS (TypeScript) for the backend and a separate frontend application (e.g., React or similar). This project supports containerized deployment using Docker and is designed with modularity, scalability, and best practices in mind.
+A full-stack (mainly backend based) bookstore management platform built using NestJS (TypeScript) for the backend and a separate frontend application (e.g., React or similar). This project supports containerized deployment using Docker and is designed with modularity, scalability, and best practices in mind.
 
 ---
 
