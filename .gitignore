@@ -1,3 +1,10 @@
 Backend_Developer_Assignment_Updated.docx.pdf
 node_modules/
 .env
+.tsbuildinfo
+*.log
+*.local
+npm-debug.log*
+dist/
+frontend/node_modules/
+frontend/dist/
