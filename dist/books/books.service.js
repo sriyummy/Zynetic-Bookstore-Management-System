@@ -40,7 +40,19 @@ let BooksService = class BooksService {
         if (query.search) {
             filter.title = { $regex: new RegExp(query.search, 'i') };
         }
-        return this.bookModel.find(filter);
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const sort = {};
+        if (query.sortBy) {
+            const order = query.order === 'desc' ? -1 : 1;
+            sort[query.sortBy] = order;
+        }
+        const [data, total] = await Promise.all([
+            this.bookModel.find(filter).sort(sort).skip(skip).limit(limit),
+            this.bookModel.countDocuments(filter),
+        ]);
+        return { data, total };
     }
     async findOne(id) {
         const book = await this.bookModel.findById(id);

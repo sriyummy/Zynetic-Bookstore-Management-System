@@ -14,11 +14,11 @@ export class BooksService {
     return book.save();
   }
 
-  async findAll(query: any): Promise<Book[]> {
+  async findAll(query: any): Promise<{ data: Book[]; total: number }> {
     const filter: any = {};
   
     if (query.author) {
-      filter.author = { $regex: new RegExp(query.author, 'i') }; // case-insensitive
+      filter.author = { $regex: new RegExp(query.author, 'i') };
     }
   
     if (query.category) {
@@ -33,8 +33,24 @@ export class BooksService {
       filter.title = { $regex: new RegExp(query.search, 'i') };
     }
   
-    return this.bookModel.find(filter);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+  
+    const sort: any = {};
+    if (query.sortBy) {
+      const order = query.order === 'desc' ? -1 : 1;
+      sort[query.sortBy] = order;
+    }
+  
+    const [data, total] = await Promise.all([
+      this.bookModel.find(filter).sort(sort).skip(skip).limit(limit),
+      this.bookModel.countDocuments(filter),
+    ]);
+  
+    return { data, total };
   }
+  
   
 
   async findOne(id: string): Promise<Book> {
