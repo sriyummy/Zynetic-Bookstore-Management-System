@@ -9,6 +9,7 @@ import {
     UseGuards,
   } from '@nestjs/common';
   import { BooksService } from './books.service';
+  import { Query } from '@nestjs/common';
   import { CreateBookDto } from './dto/create-book.dto';
   import { UpdateBookDto } from './dto/update-book.dto';
   import { JwtAuthGuard } from '../auth/guards/jwt-auth.guards';
@@ -24,9 +25,10 @@ import {
     }
   
     @Get()
-    findAll() {
-      return this.booksService.findAll();
+    findAll(@Query() query: any) {
+    return this.booksService.findAll(query);
     }
+
   
     @Get(':id')
     findOne(@Param('id') id: string) {

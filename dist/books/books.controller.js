@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BooksController = void 0;
 const common_1 = require("@nestjs/common");
 const books_service_1 = require("./books.service");
+const common_2 = require("@nestjs/common");
 const create_book_dto_1 = require("./dto/create-book.dto");
 const update_book_dto_1 = require("./dto/update-book.dto");
 const jwt_auth_guards_1 = require("../auth/guards/jwt-auth.guards");
@@ -26,8 +27,8 @@ let BooksController = class BooksController {
     create(dto) {
         return this.booksService.create(dto);
     }
-    findAll() {
-        return this.booksService.findAll();
+    findAll(query) {
+        return this.booksService.findAll(query);
     }
     findOne(id) {
         return this.booksService.findOne(id);
@@ -50,8 +51,9 @@ __decorate([
 ], BooksController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_2.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "findAll", null);
 __decorate([

@@ -14,9 +14,28 @@ export class BooksService {
     return book.save();
   }
 
-  async findAll(): Promise<Book[]> {
-    return this.bookModel.find();
+  async findAll(query: any): Promise<Book[]> {
+    const filter: any = {};
+  
+    if (query.author) {
+      filter.author = { $regex: new RegExp(query.author, 'i') }; // case-insensitive
+    }
+  
+    if (query.category) {
+      filter.category = { $regex: new RegExp(query.category, 'i') };
+    }
+  
+    if (query.rating) {
+      filter.rating = Number(query.rating);
+    }
+  
+    if (query.search) {
+      filter.title = { $regex: new RegExp(query.search, 'i') };
+    }
+  
+    return this.bookModel.find(filter);
   }
+  
 
   async findOne(id: string): Promise<Book> {
     const book = await this.bookModel.findById(id);

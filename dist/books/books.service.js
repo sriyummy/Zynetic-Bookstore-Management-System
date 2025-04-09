@@ -26,8 +26,21 @@ let BooksService = class BooksService {
         const book = new this.bookModel(createBookDto);
         return book.save();
     }
-    async findAll() {
-        return this.bookModel.find();
+    async findAll(query) {
+        const filter = {};
+        if (query.author) {
+            filter.author = { $regex: new RegExp(query.author, 'i') };
+        }
+        if (query.category) {
+            filter.category = { $regex: new RegExp(query.category, 'i') };
+        }
+        if (query.rating) {
+            filter.rating = Number(query.rating);
+        }
+        if (query.search) {
+            filter.title = { $regex: new RegExp(query.search, 'i') };
+        }
+        return this.bookModel.find(filter);
     }
     async findOne(id) {
         const book = await this.bookModel.findById(id);
