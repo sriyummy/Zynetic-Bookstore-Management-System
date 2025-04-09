@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zynetic Bookstore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-body">
+
+  <nav class="navbar navbar-light bg-light px-4">
+    <span class="navbar-brand mb-0 h1">📚 Zynetic Bookstore</span>
+    <button class="btn btn-outline-danger btn-sm" id="logoutBtn">Logout</button>
+  </nav>
+
+  <div class="container py-4">
+    <h3 class="mb-4">All Books</h3>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex gap-3">
+          <select id="filterCategory" class="form-select form-select-sm" style="width: 200px;">
+            <option value="">📂 Filter by Category</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Science">Science</option>
+            <option value="Programming">Programming</option>
+            <option value="Business">Business</option>
+          </select>
+      
+          <select id="sortBy" class="form-select form-select-sm" style="width: 200px;">
+            <option value="">⬍ Sort by</option>
+            <option value="price">Price (Low → High)</option>
+            <option value="-price">Price (High → Low)</option>
+            <option value="rating">Rating (Low → High)</option>
+            <option value="-rating">Rating (High → Low)</option>
+          </select>
+        </div>
+      </div>
+      
+
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Rating</th>
+          <th>Published</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="bookTableBody"></tbody>
+    </table>
+
+    <hr class="my-5">
+
+    <h4>Add New Book</h4>
+    <form id="addBookForm" class="row g-3 mt-1">
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Title" id="title" required />
+      </div>
+      <div class="col-md-6">
+        <input type="text" class="form-control" placeholder="Author" id="author" required />
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Category" id="category" required />
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="form-control" placeholder="Price" id="price" required />
+      </div>
+      <div class="col-md-4">
+        <input type="number" step="0.1" max="5" class="form-control" placeholder="Rating" id="rating" required />
+      </div>
+      <div class="col-md-6">
+        <input type="date" class="form-control" id="publishedDate" required />
+      </div>
+      <div class="col-md-6 d-grid">
+        <button type="submit" class="btn btn-success">Add Book</button>
+      </div>
+    </form>
+
+    <div id="error" class="text-danger mt-3" style="display: none;"></div>
+  </div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="editBookForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Book</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <input type="hidden" id="editId" />
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Title" id="editTitle" required />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Author" id="editAuthor" required />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Category" id="editCategory" required />
+          </div>
+          <div class="col-md-6">
+            <input type="number" class="form-control" placeholder="Price" id="editPrice" required />
+          </div>
+          <div class="col-md-6">
+            <input type="number" step="0.1" max="5" class="form-control" placeholder="Rating" id="editRating" required />
+          </div>
+          <div class="col-md-6">
+            <input type="date" class="form-control" id="editPublishedDate" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit">Update Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script src="./js/books.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+</body>
+</html>
